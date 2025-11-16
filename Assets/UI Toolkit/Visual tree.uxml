@@ -1,0 +1,6 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/ScoreText.uss?fileID=7433441132597879392&amp;guid=bec25b3d95dd0424e928b61d1978a4fd&amp;type=3#ScoreText" />
+    <ui:VisualElement style="flex-grow: 1;">
+        <ui:Label text="Label" class="header" style="height: 92px;" />
+    </ui:VisualElement>
+</ui:UXML>

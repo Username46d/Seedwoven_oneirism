@@ -4,15 +4,22 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    private float camSpeed = 10f;
+    [Header("Настройки")]
+    public float camSpeed = 10f;
+    public float zoomSpeed = 3f;
+    public float minZoom = 2f;
+    public float maxZoom = 10f;
+    public float dragSpeed = 10f;
+
     private float Border = 10f;
     private bool edgeBorder = true;
 
+    private Vector3 drag;
+    private bool isDragging = false;
+
     private Camera mainCamera;
 
-    private float zoomSpeed = 3f;
-    private float minZoom = 2f;
-    private float maxZoom = 10f;
+    private
     void Start()
     {
         mainCamera = Camera.main;
@@ -22,6 +29,23 @@ public class CameraController : MonoBehaviour
     {
         CameraMovement();
         ZoomCamera();
+        if (Input.GetMouseButtonDown(2))
+        {
+            isDragging = true;
+            drag = Input.mousePosition;
+        }
+        if (Input.GetMouseButtonUp(2))
+        {
+            isDragging = false;
+        }
+        if (isDragging && Input.GetMouseButton(2))
+        {
+
+            Vector3 position = Camera.main.ScreenToViewportPoint(Input.mousePosition - drag);
+            Vector3 move = new Vector3(position.x * dragSpeed, position.y * dragSpeed, 0);
+            transform.Translate(-move, Space.World);
+            drag = Input.mousePosition;
+        }
     }
 
     void CameraMovement()
