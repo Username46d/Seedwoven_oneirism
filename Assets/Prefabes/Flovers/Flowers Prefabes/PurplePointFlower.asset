@@ -9,11 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1f6dbef3140c0f541bdae49a8e15f240, type: 3}
-  m_Name: Purple Point Flower
+  m_Script: {fileID: 11500000, guid: 55acd5abd49ba1042946c2c3b0a431b3, type: 3}
+  m_Name: PurplePointFlower
   m_EditorClassIdentifier: 
   growtTile: {fileID: 6353968959630698091, guid: 78f23d59cc1b11247a83c5310fcca173, type: 3}
-  position: {x: -20, y: 6, z: 0}
-  growtTime: 5
+  position: {x: 0, y: 0, z: 0}
+  growtTime: 3
   maxStages: 1
   currentStadia: 0

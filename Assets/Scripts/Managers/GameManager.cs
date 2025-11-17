@@ -37,14 +37,12 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         currentGameTime = Time.time;
-        //Debug.Log("Время" + currentGameTime);
         if (growtQueue.Count > 0)
         {
             if (growtQueue.First().Key <= currentGameTime)
             {
                 foreach (var seed in growtQueue.First().Value)
                 {
-                    //growthManager.Register(tileManager.getPlant(seed), seed);
                     growthManager.Register(seed);
                 }
                 growtQueue.Remove(growtQueue.First().Key);
@@ -62,7 +60,7 @@ public class GameManager : MonoBehaviour
         {
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition); mousePos.z = 0;
             PlantAtCell(mousePos);
-            gameManagerEvents.Invoke(new EventsData(mousePos, 0, 0));
+            gameManagerEvents.Invoke(new EventsData(mousePos, 0, 0, 2));
         }
         if (Input.GetMouseButtonUp(0))
         {
@@ -74,6 +72,23 @@ public class GameManager : MonoBehaviour
             PlantAtCell(mousePos);
         }
     }
+    //private void PlantAtCell(Vector3 mousePos)
+    //{
+    //    isMouseHeld = true;
+    //    Vector3Int tilePos = tileManager.tilesMap.WorldToCell(mousePos);
+    //    if (tileManager.IsCanPlant(tilePos))
+    //    {
+    //        var randomDara = plantsData[Random.RandomRange(0, plantsData.Count)];
+    //        Plants randPlant = new Plants();
+    //        randPlant.sized = randomDara.sized; randPlant.growtTime = randomDara.growtTime; randPlant.position = tilePos;  // randPlant.position = tilePos; randPlant.growtTiles = randomDara.growtTiles;
+    //        GameObject plant = Instantiate(randomDara.growtTile, TIleManager.Instance.getPosition(tilePos), Quaternion.identity);
+    //        plant.transform.SetParent(Flowers.transform);
+    //        randPlant.growtTile = plant;
+    //        tileManager.AddPlant(randPlant, tilePos);
+    //        growthManager.Register(randPlant.position);
+    //    }
+    //}
+
     private void PlantAtCell(Vector3 mousePos)
     {
         isMouseHeld = true;
@@ -81,7 +96,7 @@ public class GameManager : MonoBehaviour
         if (tileManager.IsCanPlant(tilePos))
         {
             var randomDara = plantsData[Random.RandomRange(0, plantsData.Count)];
-            Plants randPlant = new Plants();
+            Plants randPlant = Instantiate(randomDara);
             randPlant.sized = randomDara.sized; randPlant.growtTime = randomDara.growtTime; randPlant.position = tilePos;  // randPlant.position = tilePos; randPlant.growtTiles = randomDara.growtTiles;
             GameObject plant = Instantiate(randomDara.growtTile, TIleManager.Instance.getPosition(tilePos), Quaternion.identity);
             plant.transform.SetParent(Flowers.transform);
@@ -109,6 +124,9 @@ public struct EventsData
     public Vector3 position;
     public int effectIndex;
     public int sfxIndex;
+    public int audioSource;
 
-    public EventsData(Vector3 pos, int e, int s) => (position, effectIndex, sfxIndex) = (pos, e, s);
+    public EventsData(Vector3 pos, int e, int s, int a) => (position, effectIndex, sfxIndex, audioSource) = (pos, e, s, a);
+    public EventsData(Vector3 pos, int e) => (position, effectIndex, sfxIndex, audioSource) = (pos, e, 0, 0);
+    public EventsData(int s, int a) => (position, effectIndex, sfxIndex, audioSource) = (Vector3.zero, 0, s, a);
 }

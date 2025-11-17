@@ -30,7 +30,6 @@ public class TIleManager : MonoBehaviour
         public TypesPlant soilData;
         public bool isOpened;
         public Vector3Int Position;
-        
     }
     
     void Start()
@@ -110,34 +109,12 @@ public class TIleManager : MonoBehaviour
     }
     public void OpenTiles(Vector3Int CenralPos, int radiuses)
     {
-        //for (int i = -radiuses; i < radiuses; i++)
-        //{
-        //    Debug.Log("������� i " + i);
-        //    for (int j = -radiuses; j < radiuses; j++)
-        //    {
-        //        Debug.Log("������� j " + j + " radius " + radiuses);
-        //        positionsInVoid.x = CenralPos.x + i;
-        //        positionsInVoid.y = CenralPos.y + j;
-        //        if (tileDataMap.ContainsKey(positionsInVoid)){
-        //            tilesMap.SetColor(positionsInVoid, Color.white);
-        //            tileDataMap[positionsInVoid].IsOpened = true;
-        //        }
-        //        maxOp -= 1;
-        //        Debug.Log(positionsInVoid);
-        //        if (maxOp <= 0){
-        //            return;
-        //        }
-        //    }
-        //}
-        Debug.Log("�������� �����");
-        int i = -radiuses;
-        while (i < radiuses + 1)
+        for (int i = -radiuses; i <= radiuses; i++)
         {
-            int j = -radiuses;
-            //Debug.Log("������� i " + i);
-            while (j < radiuses + 1)
+            Debug.Log("������� i " + i);
+            for (int j = -radiuses; j <= radiuses; j++)
             {
-                //Debug.Log("������� j " + j + " radius " + radiuses);
+                Debug.Log("������� j " + j + " radius " + radiuses);
                 positionsInVoid.x = CenralPos.x + i;
                 positionsInVoid.y = CenralPos.y + j;
                 if (tileDataMap.ContainsKey(positionsInVoid))
@@ -145,9 +122,7 @@ public class TIleManager : MonoBehaviour
                     tilesMap.SetColor(positionsInVoid, Color.white);
                     tileDataMap[positionsInVoid].isOpened = true;
                 }
-                j++;
             }
-            i++;
         }
     }
     public void AddTile(Vector3Int position)
@@ -158,7 +133,7 @@ public class TIleManager : MonoBehaviour
         tileDataMap[position].PlantedSeed.growtTile.transform.DOScale(new Vector3 (1f, 1f, 1f), time / 1.5f).SetEase(Ease.InOutQuad);
         tileDataMap[position].PlantedSeed.growtTile.transform.DORotate(new Vector3 (0f, 0f, Random.RandomRange(0f, 360f)), time / 1.5f).SetEase(Ease.Linear);
 
-        tileManagerEvents.Invoke(new EventsData(transform.TransformPoint(position), 1, 1));
+        tileManagerEvents.Invoke(new EventsData(transform.TransformPoint(position), 1, 1, 2));
     }
     public void AddPlant(Plants plant, Vector3Int position)
     {

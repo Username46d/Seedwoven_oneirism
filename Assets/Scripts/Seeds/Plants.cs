@@ -12,6 +12,11 @@ public class Plants : ScriptableObject
     public Sized sized = new Sized(0.1f, 1f);
     public int maxStages = 1;
     public int currentStadia = 0;
+
+    public virtual void Apply()
+    {
+        return;
+    }
 }
 public struct Sized
 {
