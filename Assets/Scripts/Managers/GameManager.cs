@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
     public TIleManager tileManager;
     public List<Plants> plantsData;
 
-    public ScoreManager scoreManager = new ScoreManager();
+    public ScoreManager scoreManager;
 
     private SortedDictionary<int, List<Vector3Int>> growtQueue = new SortedDictionary<int, List<Vector3Int>>();
 
@@ -22,17 +22,13 @@ public class GameManager : MonoBehaviour
     // Дополнительно
     private bool isMouseHeld = false;
     Vector3Int lastCell = new Vector3Int(999, 999, 0);
-
-
-    public static event System.Action<EventsData> gameManagerEvents;
-
     private void Awake()
     {
         Instance = this;
     }
     void Start()
     {
-        
+        scoreManager = new ScoreManager();
     }
     void Update()
     {
@@ -60,7 +56,7 @@ public class GameManager : MonoBehaviour
         {
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition); mousePos.z = 0;
             PlantAtCell(mousePos);
-            gameManagerEvents.Invoke(new EventsData(mousePos, 0, 0, 2));
+            EventsManager.Instance.DoAudioEvents(new AudioEvent(0, 2)); EventsManager.Instance.DoParticleEvents(new ParticleEvent(mousePos, 0));
         }
         if (Input.GetMouseButtonUp(0))
         {
@@ -119,14 +115,3 @@ public class GameManager : MonoBehaviour
 }
 
 
-public struct EventsData
-{
-    public Vector3 position;
-    public int effectIndex;
-    public int sfxIndex;
-    public int audioSource;
-
-    public EventsData(Vector3 pos, int e, int s, int a) => (position, effectIndex, sfxIndex, audioSource) = (pos, e, s, a);
-    public EventsData(Vector3 pos, int e) => (position, effectIndex, sfxIndex, audioSource) = (pos, e, 0, 0);
-    public EventsData(int s, int a) => (position, effectIndex, sfxIndex, audioSource) = (Vector3.zero, 0, s, a);
-}

@@ -22,8 +22,6 @@ public class TIleManager : MonoBehaviour
 
     private Dictionary<Vector3Int, GameTile> tileDataMap = new Dictionary<Vector3Int, GameTile>();  
     Vector3Int positionsInVoid = new Vector3Int(0, 0, 0);
-
-    public static event System.Action<EventsData> tileManagerEvents;
     public class GameTile
     {
         public Plants PlantedSeed;
@@ -132,8 +130,7 @@ public class TIleManager : MonoBehaviour
         //tileDataMap[position].PlantedSeed.growtTile.transform.rotation.z = Random.RandomRange(0f, 360f);
         tileDataMap[position].PlantedSeed.growtTile.transform.DOScale(new Vector3 (1f, 1f, 1f), time / 1.5f).SetEase(Ease.InOutQuad);
         tileDataMap[position].PlantedSeed.growtTile.transform.DORotate(new Vector3 (0f, 0f, Random.RandomRange(0f, 360f)), time / 1.5f).SetEase(Ease.Linear);
-
-        tileManagerEvents.Invoke(new EventsData(transform.TransformPoint(position), 1, 1, 2));
+        EventsManager.Instance.DoAudioEvents(new AudioEvent(1, 1)); EventsManager.Instance.DoParticleEvents(new ParticleEvent(transform.TransformPoint(position), 1));
     }
     public void AddPlant(Plants plant, Vector3Int position)
     {

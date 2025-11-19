@@ -11,15 +11,14 @@ public class SoundManager : MonoBehaviour
 
     private void Start()
     {
-        GameManager.gameManagerEvents += PlaySFX;
-        TIleManager.tileManagerEvents += PlaySFX;
+        EventsManager.audioEvent += PlaySFX;
     }
     void StartMusic(int number)
     {
         
     }
 
-    void PlaySFX(EventsData eventsData)
+    void PlaySFX(AudioEvent eventsData)
     {
         SoundConfig currentSfx = sfx[eventsData.sfxIndex];
         audioSources[eventsData.audioSource].clip = currentSfx.audioclip;

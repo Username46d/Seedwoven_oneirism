@@ -9,11 +9,10 @@ public class ParticleManager : MonoBehaviour
 
     private void Start()
     {
-        GameManager.gameManagerEvents += PlayEffect;
-        TIleManager.tileManagerEvents += PlayEffect;
+        EventsManager.particleEvent += PlayEffect;
     }
 
-   public void PlayEffect(EventsData eventsData)
+   public void PlayEffect(ParticleEvent eventsData)
    {
         ParticleSystem currentEffect = effects[eventsData.effectIndex];
         currentEffect.transform.position = eventsData.position;

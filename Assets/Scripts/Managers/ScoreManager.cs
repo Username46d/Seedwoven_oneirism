@@ -7,7 +7,6 @@ public class ScoreManager
 {
     int totalScore = 0;
     int currentScore = 0;
-
     public ScoreManager() => (totalScore, currentScore) = (0, 0);
     public ScoreManager(int total, int current) => (totalScore, currentScore) = (total, current);
 

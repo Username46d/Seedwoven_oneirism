@@ -18,7 +18,6 @@ public class GrowthManager : MonoBehaviour
         }
         else
         {
-            //TIleManager.Instance?.OpenTiles(position, 1);
             plant.Apply();
         }
     }
