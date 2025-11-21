@@ -20,11 +20,6 @@ public class EventsManager : MonoBehaviour
         particleEvent.Invoke(enentsData);
     }
 }
-
-
-
-
-
 public struct AudioEvent
 {
     public int sfxIndex;

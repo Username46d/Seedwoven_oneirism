@@ -5,6 +5,7 @@ using UnityEngine;
 using Unity.VisualScripting;
 using UnityEngine.UIElements;
 using DG.Tweening;
+using System.Linq;
 
 public class TIleManager : MonoBehaviour
 {
@@ -123,13 +124,49 @@ public class TIleManager : MonoBehaviour
             }
         }
     }
+    public void OpenTiles(Vector3Int CenralPos, Vector3Int[] customPosition)
+    {
+        foreach (var position in customPosition)
+        {
+            positionsInVoid.x = CenralPos.x + position.x;
+            positionsInVoid.y = CenralPos.y + position.y;
+            if (tileDataMap.ContainsKey(positionsInVoid))
+            {
+                tilesMap.SetColor(positionsInVoid, Color.white);
+                tileDataMap[positionsInVoid].isOpened = true;
+            }
+        }
+    }
+    public int CombinateCheck(Vector3Int position)
+    {
+        int c = 0;
+        for (int i = -1; i <= 1; i++)
+        {
+            for (int j = -1; j <= 1; j++)
+            {
+                if (i == 0 && j == 0) { continue; }
+                positionsInVoid.x = position.x + i;
+                positionsInVoid.y = position.y + j;
+                if (tileDataMap.ContainsKey(positionsInVoid))
+                {
+                    if (tileDataMap[positionsInVoid].PlantedSeed != null && tileDataMap[positionsInVoid].PlantedSeed.currentStadia == tileDataMap[positionsInVoid].PlantedSeed.maxStages && tileDataMap[position].PlantedSeed.CombinationFlowers.Contains(tileDataMap[positionsInVoid].PlantedSeed.typesFlower))
+                    {
+                        c += 1;
+                    }
+                }
+            }
+        }
+        return c;
+    }
     public void AddTile(Vector3Int position)
     {
         var time = tileDataMap[position].PlantedSeed.growtTime;
-        tileDataMap[position].PlantedSeed.growtTile.transform.localScale = new Vector3(0.2f, 0.2f, 1f);
+        Transform transformTiles = tileDataMap[position].PlantedSeed.growtTile.transform;
+        tileDataMap[position].PlantedSeed.growtTile.transform.localScale = new Vector3(tileDataMap[position].PlantedSeed.sized.startSize, tileDataMap[position].PlantedSeed.sized.startSize, 1f);
         //tileDataMap[position].PlantedSeed.growtTile.transform.rotation.z = Random.RandomRange(0f, 360f);
         tileDataMap[position].PlantedSeed.growtTile.transform.DOScale(new Vector3 (1f, 1f, 1f), time / 1.5f).SetEase(Ease.InOutQuad);
         tileDataMap[position].PlantedSeed.growtTile.transform.DORotate(new Vector3 (0f, 0f, Random.RandomRange(0f, 360f)), time / 1.5f).SetEase(Ease.Linear);
+
         EventsManager.Instance.DoAudioEvents(new AudioEvent(1, 1)); EventsManager.Instance.DoParticleEvents(new ParticleEvent(transform.TransformPoint(position), 1));
     }
     public void AddPlant(Plants plant, Vector3Int position)
@@ -138,17 +175,15 @@ public class TIleManager : MonoBehaviour
     }
     public Plants getPlant(Vector3Int position) { return tileDataMap[position].PlantedSeed; }
     public Vector3 getPosition(Vector3Int position) { return tilesMap.GetCellCenterWorld(position); }
-    void Update()
-    {
-        // �������
-        //Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        //mouseWorldPos.z = 0;
-        //Vector3Int hoveredTile = tilesMap.WorldToCell(mouseWorldPos);
-        //if (hoveredTile != lastHovPos)
-        //{
-        //    if (tileDataMap.ContainsKey(hoveredTile)) { Debug.Log($"��� �����: {tileDataMap[hoveredTile].soilData.growtMultiplier}"); }
-        //    lastHovPos = hoveredTile;
-        //}
-        // ����� �������
-    }
+    //void Update()
+    //{
+    //    Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+    //    mouseWorldPos.z = 0;
+    //    Vector3Int hoveredTile = tilesMap.WorldToCell(mouseWorldPos);
+    //    if (hoveredTile != lastHovPos)
+    //    {
+    //        if (tileDataMap.ContainsKey(hoveredTile)) { Debug.Log($"Current Position: {hoveredTile}"); }
+    //        lastHovPos = hoveredTile;
+    //    }
+    //}
 }

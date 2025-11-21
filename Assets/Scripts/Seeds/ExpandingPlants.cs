@@ -5,8 +5,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Plants", menuName = "Plants/ExpandingPlants")]
 public class ExpandingPlants : Plants
 {
-    public override void Apply()
+    public override void Apply(int combinationCoef)
     {
-        TIleManager.Instance.OpenTiles(position, 1);
+        TIleManager.Instance.OpenTiles(position, combinationCoef > combinatiedIndex ? 2 : 1);
     }
 }

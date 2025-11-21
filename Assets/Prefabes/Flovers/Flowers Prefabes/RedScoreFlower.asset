@@ -15,5 +15,9 @@ MonoBehaviour:
   growtTile: {fileID: 9083412793667917579, guid: 2c5ac6ff8d92e4742be339fa10295129, type: 3}
   position: {x: 0, y: 0, z: 0}
   growtTime: 3
+  typesFlower: 2
+  CombinationFlowers: 04000000
   maxStages: 1
   currentStadia: 0
+  combinatiedIndex: 1
+  points: 10

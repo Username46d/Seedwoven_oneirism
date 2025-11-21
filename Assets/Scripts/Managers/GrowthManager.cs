@@ -18,7 +18,7 @@ public class GrowthManager : MonoBehaviour
         }
         else
         {
-            plant.Apply();
+            plant.Apply(TIleManager.Instance.CombinateCheck(position));
         }
     }
 }

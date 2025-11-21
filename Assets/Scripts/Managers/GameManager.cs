@@ -68,22 +68,6 @@ public class GameManager : MonoBehaviour
             PlantAtCell(mousePos);
         }
     }
-    //private void PlantAtCell(Vector3 mousePos)
-    //{
-    //    isMouseHeld = true;
-    //    Vector3Int tilePos = tileManager.tilesMap.WorldToCell(mousePos);
-    //    if (tileManager.IsCanPlant(tilePos))
-    //    {
-    //        var randomDara = plantsData[Random.RandomRange(0, plantsData.Count)];
-    //        Plants randPlant = new Plants();
-    //        randPlant.sized = randomDara.sized; randPlant.growtTime = randomDara.growtTime; randPlant.position = tilePos;  // randPlant.position = tilePos; randPlant.growtTiles = randomDara.growtTiles;
-    //        GameObject plant = Instantiate(randomDara.growtTile, TIleManager.Instance.getPosition(tilePos), Quaternion.identity);
-    //        plant.transform.SetParent(Flowers.transform);
-    //        randPlant.growtTile = plant;
-    //        tileManager.AddPlant(randPlant, tilePos);
-    //        growthManager.Register(randPlant.position);
-    //    }
-    //}
 
     private void PlantAtCell(Vector3 mousePos)
     {
@@ -103,8 +87,6 @@ public class GameManager : MonoBehaviour
     }
     public void RegisterSeed(Vector3Int position, int growtTime)   
     {
-        // Переделать таймер
-        //Debug.Log(")
         int timeKey = (int)currentGameTime + growtTime;
         if (!growtQueue.ContainsKey(timeKey))  
         {

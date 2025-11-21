@@ -4,8 +4,9 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Plants", menuName = "Plants/Score Plant")]
 public class ScorePlant : Plants
 {
-    public override void Apply()
+    public int points;
+    public override void Apply(int combinationCoef)
     {
-        GameManager.Instance.scoreManager.AddScore(10);
+        GameManager.Instance.scoreManager.AddScore(combinationCoef > combinatiedIndex ? points * combinationCoef : points);
     }
 }

@@ -5597,11 +5597,9 @@ MonoBehaviour:
   growthManager: {fileID: 1453666304}
   tileManager: {fileID: 1506248620}
   plantsData:
-  - {fileID: 11400000, guid: d844bc8064e9ac54998fdffc34c31cdd, type: 2}
-  - {fileID: 11400000, guid: 67eefaebcf74b1f44a6522a00611497b, type: 2}
   - {fileID: 11400000, guid: 2d2f95772c75bec448ea9f818f0c1533, type: 2}
-  - {fileID: 11400000, guid: d1c3eb0ea9adcb042a8e87993e3f0323, type: 2}
   - {fileID: 11400000, guid: 929af594b7b28b1418a3dd0991e71e52, type: 2}
+  - {fileID: 11400000, guid: 99623eee44559744ba9b0d7e7d62cfea, type: 2}
   currentGameTime: 0
 --- !u!4 &1004018166
 Transform:
