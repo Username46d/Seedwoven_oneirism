@@ -19,12 +19,16 @@ public class GameManager : MonoBehaviour
     private SortedDictionary<int, List<Vector3Int>> growtQueue = new SortedDictionary<int, List<Vector3Int>>();
 
     public float currentGameTime = 0f;
+    private float timer = 0f;
+
+    public float chall = 1f;
     // Дополнительно
     private bool isMouseHeld = false;
     Vector3Int lastCell = new Vector3Int(999, 999, 0);
     private void Awake()
     {
         Instance = this;
+        Time.timeScale = 1f;
     }
     void Start()
     {
@@ -33,6 +37,8 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         currentGameTime = Time.time;
+        timer += Time.deltaTime;
+        //Debug.Log(timer);
         if (growtQueue.Count > 0)
         {
             if (growtQueue.First().Key <= currentGameTime)
@@ -44,9 +50,10 @@ public class GameManager : MonoBehaviour
                 growtQueue.Remove(growtQueue.First().Key);
             }
         }
-        if (Input.GetKeyDown(KeyCode.H))
+        if (timer >= 10f)
         {
-            scoreManager.AddScore(10);
+            timer = 0f;
+            Checked(scoreManager.CheckPoints());
         }
         HangleInput();
     }
@@ -68,7 +75,6 @@ public class GameManager : MonoBehaviour
             PlantAtCell(mousePos);
         }
     }
-
     private void PlantAtCell(Vector3 mousePos)
     {
         isMouseHeld = true;
@@ -87,12 +93,31 @@ public class GameManager : MonoBehaviour
     }
     public void RegisterSeed(Vector3Int position, int growtTime)   
     {
-        int timeKey = (int)currentGameTime + growtTime;
+        int timeKey = (int)((currentGameTime + growtTime) * chall);
         if (!growtQueue.ContainsKey(timeKey))  
         {
             growtQueue[timeKey] = new List<Vector3Int>();
         }
         growtQueue[timeKey].Add(position);
+    }
+    public void Checked(bool d)
+    {
+        if (d)
+        {
+            NewChallenge();
+        }
+        else
+        {
+            NewChallenge();
+        }
+    }
+    public void NewChallenge()
+    {
+        ChallengeManager.Instance.DoChallenge();
+    }
+    public void SetChall(float newChall)
+    {
+        chall = newChall;
     }
 }
 

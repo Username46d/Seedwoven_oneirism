@@ -11,8 +11,11 @@ public class ParticleManager : MonoBehaviour
     {
         EventsManager.particleEvent += PlayEffect;
     }
-
-   public void PlayEffect(ParticleEvent eventsData)
+    private void OnDestroy()
+    {
+        EventsManager.particleEvent -= PlayEffect;
+    }
+    public void PlayEffect(ParticleEvent eventsData)
    {
         ParticleSystem currentEffect = effects[eventsData.effectIndex];
         currentEffect.transform.position = eventsData.position;

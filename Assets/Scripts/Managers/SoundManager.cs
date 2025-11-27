@@ -13,6 +13,10 @@ public class SoundManager : MonoBehaviour
     {
         EventsManager.audioEvent += PlaySFX;
     }
+    private void OnDestroy()
+    {
+        EventsManager.audioEvent -= PlaySFX;
+    }
     void StartMusic(int number)
     {
         
