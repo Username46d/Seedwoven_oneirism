@@ -15,11 +15,9 @@ public class Plants : ScriptableObject
     public int maxStages = 1;
     public int currentStadia = 0;
     public int combinatiedIndex = 1;
-
-    public virtual void Apply(int combinationCoef)
-    {
-        return;
-    }
+    
+    public virtual void Apply(){ return; }
+    public virtual void Apply(int combinationCoef) { return; }
 }
 public struct Sized
 {

@@ -48,19 +48,10 @@ public class UIManager : MonoBehaviour
     } 
     public void ChangeChallengePalen(Challenge challenge1, Challenge challenge2)
     {
-        Debug.Log("Выполнилось");
-        if (challenge1._sprite == null || challenge2._sprite == null || images[0] == null || images[1] == null)
-        {
-            Debug.Log("абдябдя");
-        }
         images[0].sprite = challenge1._sprite;
-        Debug.Log("Выполнилось");
         textMeshPros[0].text = challenge1._text;
-        Debug.Log("Выполнилось");
         images[1].sprite = challenge2._sprite;
-        Debug.Log("Выполнилось");
         textMeshPros[1].text = challenge2._text;
-        Debug.Log("Выполнилось");
         challengees.Clear();
         challengees.Add(challenge1); challengees.Add(challenge2);
     }

@@ -12,8 +12,8 @@ public class GameManager : MonoBehaviour
     public GameObject Flowers;
     public GrowthManager growthManager;
     public TIleManager tileManager;
+    public List<Plants> unUsedPlants;
     public List<Plants> plantsData;
-
     public ScoreManager scoreManager;
 
     private SortedDictionary<int, List<Vector3Int>> growtQueue = new SortedDictionary<int, List<Vector3Int>>();
@@ -56,6 +56,10 @@ public class GameManager : MonoBehaviour
             Checked(scoreManager.CheckPoints());
         }
         HangleInput();
+        if (Input.GetKeyDown(KeyCode.U))
+        {
+            AddNewPlant();
+        }
     }
     void HangleInput()
     {
@@ -79,16 +83,26 @@ public class GameManager : MonoBehaviour
     {
         isMouseHeld = true;
         Vector3Int tilePos = tileManager.tilesMap.WorldToCell(mousePos);
-        if (tileManager.IsCanPlant(tilePos))
+        if (tileManager.isContained(tilePos))
         {
-            var randomDara = plantsData[Random.RandomRange(0, plantsData.Count)];
-            Plants randPlant = Instantiate(randomDara);
-            randPlant.sized = randomDara.sized; randPlant.growtTime = randomDara.growtTime; randPlant.position = tilePos;  // randPlant.position = tilePos; randPlant.growtTiles = randomDara.growtTiles;
-            GameObject plant = Instantiate(randomDara.growtTile, TIleManager.Instance.getPosition(tilePos), Quaternion.identity);
-            plant.transform.SetParent(Flowers.transform);
-            randPlant.growtTile = plant;
-            tileManager.AddPlant(randPlant, tilePos);
-            growthManager.Register(randPlant.position);
+            if (tileManager.IsSpecialPlant(tilePos))
+            {
+                tileManager.getPlant(tilePos).Apply();
+                Debug.Log("Выполнено в GameManager");
+                return;
+            }
+            if (tileManager.IsCanPlant(tilePos) && plantsData.Count != 0)
+            {
+                var randomDara = plantsData[Random.RandomRange(0, plantsData.Count)];
+                Plants randPlant = Instantiate(randomDara);
+                randPlant.sized = randomDara.sized; randPlant.growtTime = randomDara.growtTime; randPlant.position = tilePos;  // randPlant.position = tilePos; randPlant.growtTiles = randomDara.growtTiles;
+                GameObject plant = Instantiate(randomDara.growtTile, TIleManager.Instance.getPosition(tilePos), Quaternion.identity);
+                plant.transform.SetParent(Flowers.transform);
+                randPlant.growtTile = plant;
+                tileManager.AddPlant(randPlant, tilePos);
+                growthManager.Register(randPlant.position);
+                return;
+            }
         }
     }
     public void RegisterSeed(Vector3Int position, int growtTime)   
@@ -118,6 +132,16 @@ public class GameManager : MonoBehaviour
     public void SetChall(float newChall)
     {
         chall = newChall;
+    }
+    public void AddNewPlant()
+    {
+        if (unUsedPlants.Count == 0)
+        {
+            return;
+        }
+        var newPlant = unUsedPlants[Random.RandomRange(0, unUsedPlants.Count)];
+        plantsData.Add(newPlant);
+        unUsedPlants.Remove(newPlant);
     }
 }
 

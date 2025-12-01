@@ -13,8 +13,9 @@ public class TIleManager : MonoBehaviour
 
     [Header("���������")]
     public Tilemap tilesMap;
-    public Tilemap floverMap;
     public TypesPlant[] tileTypes;
+    public List<TypesPlant> specialSoil;
+    public Plants plantUnlocker;
 
     [Header("�������� ����")]
     public List<Vector3Int> activeTiles;
@@ -30,13 +31,11 @@ public class TIleManager : MonoBehaviour
         public bool isOpened;
         public Vector3Int Position;
     }
-    
     void Start()
     {
         Instance = this;
         InitializeTiles();
     }
-
     void InitializeTiles()
     {
         BoundsInt bounds = tilesMap.cellBounds;
@@ -59,7 +58,6 @@ public class TIleManager : MonoBehaviour
                     tilesMap.SetColor(posit, Color.gray);
                     tilesMap.RefreshTile(posit);
                 }
-
                 RuleTile ruleTileFromMap = tilesMap.GetTile(posit) as RuleTile;
                 foreach (var types in tileTypes)
                 {
@@ -68,9 +66,17 @@ public class TIleManager : MonoBehaviour
                         tileDataMap[posit].soilData = types;
                     }
                 }
+                if (specialSoil[0].ruleTile == ruleTileFromMap)
+                {
+                    Plants randPlant = Instantiate(plantUnlocker);
+                    randPlant.sized = plantUnlocker.sized; randPlant.growtTime = plantUnlocker.growtTime; randPlant.position = posit;  // randPlant.position = tilePos; randPlant.growtTiles = randomDara.growtTiles;
+                    GameObject plant = Instantiate(plantUnlocker.growtTile, getPosition(posit), Quaternion.identity);
+                    randPlant.growtTile = plant;
+                    tileDataMap[posit].PlantedSeed = randPlant; tileDataMap[posit].soilData = specialSoil[0];
+                    Debug.Log($"{tileDataMap[posit].PlantedSeed}");
+                }
             }
         }
-        Debug.Log(tileDataMap.Count);
     }
     public GameTile CreateNewTile()
     {
@@ -88,23 +94,39 @@ public class TIleManager : MonoBehaviour
         };
         return data;
     }
+    public bool isContained(Vector3Int position)
+    {
+        return tileDataMap.ContainsKey(position);
+    }
     public bool IsCanPlant(Vector3Int position)
     {
-        if (tileDataMap.ContainsKey(position))
+        if (tileDataMap[position].isOpened && tileDataMap[position].PlantedSeed == null && tileDataMap[position].soilData.isPlantable)
         {
-            if (tileDataMap[position].isOpened == true && tileDataMap[position].PlantedSeed == null && tileDataMap[position].soilData.isPlantable)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return true;
         }
         else
         {
             return false;
         }
+    }
+    public bool IsSpecialPlant(Vector3Int position)
+    {
+        Debug.Log(tileDataMap.ContainsKey(position));
+        Debug.Log(specialSoil.Contains(tileDataMap[position].soilData));
+        Debug.Log(tileDataMap[position].isOpened);
+        Debug.Log($"{tileDataMap[position].PlantedSeed}");
+        if (tileDataMap.ContainsKey(position) && specialSoil.Contains(tileDataMap[position].soilData) && tileDataMap[position].isOpened) 
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    public bool IsOpened(Vector3Int position)
+    {
+        return tileDataMap[position].isOpened;
     }
     public void OpenTiles(Vector3Int CenralPos, int radiuses)
     {
