@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: RedScoreFlower
   m_EditorClassIdentifier: 
   growtTile: {fileID: 9083412793667917579, guid: 2c5ac6ff8d92e4742be339fa10295129, type: 3}
+  descript: Point Flower 1
+  price: 12
   position: {x: 0, y: 0, z: 0}
   growtTime: 3
   typesFlower: 2

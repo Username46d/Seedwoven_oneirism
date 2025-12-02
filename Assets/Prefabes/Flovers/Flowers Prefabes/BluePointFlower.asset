@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: BluePointFlower
   m_EditorClassIdentifier: 
   growtTile: {fileID: 3676310206503058330, guid: e8f0fbedbe8b08e45b512783bdefa972, type: 3}
+  descript: Point Flower 2.0
+  price: 10
   position: {x: 0, y: 0, z: 0}
   growtTime: 3
   typesFlower: 0

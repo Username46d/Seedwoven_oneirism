@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: PurplePointFlower 1
   m_EditorClassIdentifier: 
   growtTile: {fileID: 6353968959630698091, guid: 78f23d59cc1b11247a83c5310fcca173, type: 3}
+  descript: Purple Flower 3.0
+  price: 3133
   position: {x: 0, y: 0, z: 0}
   growtTime: 3
   typesFlower: 1

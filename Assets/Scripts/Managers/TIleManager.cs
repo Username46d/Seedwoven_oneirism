@@ -15,7 +15,7 @@ public class TIleManager : MonoBehaviour
     public Tilemap tilesMap;
     public TypesPlant[] tileTypes;
     public List<TypesPlant> specialSoil;
-    public Plants plantUnlocker;
+    public Plants[] plantUnlocker;
 
     [Header("�������� ����")]
     public List<Vector3Int> activeTiles;
@@ -68,9 +68,10 @@ public class TIleManager : MonoBehaviour
                 }
                 if (specialSoil[0].ruleTile == ruleTileFromMap)
                 {
-                    Plants randPlant = Instantiate(plantUnlocker);
-                    randPlant.sized = plantUnlocker.sized; randPlant.growtTime = plantUnlocker.growtTime; randPlant.position = posit;  // randPlant.position = tilePos; randPlant.growtTiles = randomDara.growtTiles;
-                    GameObject plant = Instantiate(plantUnlocker.growtTile, getPosition(posit), Quaternion.identity);
+                    var randomPlant = plantUnlocker[Random.RandomRange(0, plantUnlocker.Length)];
+                    Plants randPlant = Instantiate( randomPlant);
+                    randPlant.sized = randomPlant.sized; randPlant.growtTime = randomPlant.growtTime; randPlant.position = posit;  // randPlant.position = tilePos; randPlant.growtTiles = randomDara.growtTiles;
+                    GameObject plant = Instantiate(randomPlant.growtTile, getPosition(posit), Quaternion.identity);
                     randPlant.growtTile = plant;
                     tileDataMap[posit].PlantedSeed = randPlant; tileDataMap[posit].soilData = specialSoil[0];
                     Debug.Log($"{tileDataMap[posit].PlantedSeed}");

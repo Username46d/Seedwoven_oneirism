@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: YellowOpenFlower
   m_EditorClassIdentifier: 
   growtTile: {fileID: 5627381855751503067, guid: ca1e47529b6f0dd489f29def5663f883, type: 3}
+  descript: Tile Open Flower
+  price: 200
   position: {x: 0, y: 0, z: 0}
   growtTime: 3
   typesFlower: 4

@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6efc5faf85a6f5d429755f7da8ea2c50, type: 3}
   m_Name: Challenge
   m_EditorClassIdentifier: 
-  tname: bvb
+  tname: Adds 50 points to the required number of points
   _sprite: {fileID: 931229103, guid: 2ecae449c27ca0341b40e08cba9b984c, type: 3}
-  _text: ooooooooooooooffffsdfsdgfsgdfsdfdsgdsgdsgds
+  _text: Adds 50 points to the required number of points

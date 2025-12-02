@@ -9,12 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e5410bf99127c64ba3154a8cd681895, type: 3}
-  m_Name: TileOpenFlower
+  m_Script: {fileID: 11500000, guid: 8e1987656b386184097468c9f634adfb, type: 3}
+  m_Name: Plants 1
   m_EditorClassIdentifier: 
-  growtTile: {fileID: 5897724846844457708, guid: 34ac460fb512c174f98ce6511b6dfe4b, type: 3}
-  descript: Tile Open Flower 2
-  price: 14
+  growtTile: {fileID: 2392501801871518499, guid: 2767acbb1f2f59d49a6b466a81bb7cbc, type: 3}
+  descript: 
+  price: 0
   position: {x: 0, y: 0, z: 0}
   growtTime: 3
   typesFlower: 0
@@ -22,3 +22,4 @@ MonoBehaviour:
   maxStages: 1
   currentStadia: 0
   combinatiedIndex: 1
+  isUsed: 0

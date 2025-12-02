@@ -7,6 +7,6 @@ public class DoublePoints : Challenge
     public override void Apply()
     {
         Debug.Log("DP");
-        GameManager.Instance.scoreManager.ChangeFine(2000);
+        GameManager.Instance.scoreManager.ChangeFine(50);
     }
 }

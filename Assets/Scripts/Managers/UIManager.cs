@@ -11,19 +11,33 @@ public class UIManager : MonoBehaviour
     [Header("Setting")]
     public TextMeshProUGUI scoreText;
     public GameObject[] gameObjects;
+
+    [Header("ChallengePanelSetting")]
     public TMP_Text[] textMeshPros;
     public Image[] images;
-    public Button[] buttons;
+
+    [Header("ShopPanelSetting")]
+    public TMP_Text[] shopText;
+    public Image[] shopImages;
+    public GameObject[] shopObjects;
+    public TMP_Text[] shopButtonText;
+    public Button[] shopButton;
 
     private List<Challenge> challengees;
+    private List<Plants> plantes;
+
+
+    int tscore = 0;
     private void Start()
     {
         Instance = this;
         challengees = new List<Challenge>();
+        plantes = new List<Plants>();
     }
-    public void UpdateScore(int score)
+    public void UpdateScore(int score, int fine)
     {
-        scoreText.text = $"Current score: {score}";
+        scoreText.text = $"Current score: {score} / {fine}";
+        tscore = score;
     }
     public void Open(int index)
     {
@@ -55,10 +69,46 @@ public class UIManager : MonoBehaviour
         challengees.Clear();
         challengees.Add(challenge1); challengees.Add(challenge2);
     }
+    public void Shop()
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            shopObjects[i].SetActive(false);
+            shopButton[i].interactable = true; shopButton[i].GetComponent<Image>().color = Color.white;
+        }
+        List<Plants> plants = GameManager.Instance.RandomPlants();
+        if (plants == null)
+        {
+            return;
+        }
+        else
+        {
+            plantes.Clear();
+            for (int i = 0; i < plants.Count; i++)
+            {
+                shopImages[i].sprite = plants[i].growtTile.GetComponent<SpriteRenderer>().sprite;
+                shopText[i].text = plants[i].descript;
+                shopButtonText[i].text = $"{plants[i].price}";
+                shopObjects[i].SetActive(true);
+                plantes.Add(plants[i]);
+            }
+        }
+        shopText[3].text = $"{tscore}";
+        Open(3);
+    }
     public void OnChallengSelected(int i)
     {
         Debug.Log(challengees.Count);
         challengees[i].Apply();
         Close(2);
+    }
+    public void BuyPlant(int i)
+    {
+        if (GameManager.Instance.BuyThisPlant(plantes[i]))
+        {
+            shopButton[i].interactable = false;
+            shopButton[i].GetComponent<Image>().color = Color.gray;
+        }
+        Close(3);
     }
 }

@@ -7,6 +7,8 @@ using UnityEngine;
 public class Plants : ScriptableObject
 {
     public GameObject growtTile;
+    public string descript;
+    public int price;
     public Vector3Int position;
     public int growtTime = 3;
     public TypesFlower typesFlower;
@@ -15,6 +17,7 @@ public class Plants : ScriptableObject
     public int maxStages = 1;
     public int currentStadia = 0;
     public int combinatiedIndex = 1;
+
     
     public virtual void Apply(){ return; }
     public virtual void Apply(int combinationCoef) { return; }
@@ -32,5 +35,6 @@ public enum TypesFlower
     PurplePoint,
     RedScore,
     TileOpenFlower,
-    YellowOpenFlower
+    YellowOpenFlower,
+    SpecialFlower
 }

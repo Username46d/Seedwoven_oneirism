@@ -7,7 +7,7 @@ public class ScoreManager
 {
     int totalScore = 0;
     int currentScore = 0;
-    int fine = 10;
+    int fine = 250;
     public ScoreManager() => (totalScore, currentScore) = (0, 0);
     public ScoreManager(int total, int current) => (totalScore, currentScore) = (total, current);
 
@@ -15,11 +15,22 @@ public class ScoreManager
     {
         totalScore += points;
         currentScore += points;
-        UIManager.Instance.UpdateScore(currentScore);
+        UIManager.Instance.UpdateScore(currentScore, fine);
     }
     public void ChangeFine(int i)
     {
-        fine = i;
+        fine += i;
+        UIManager.Instance.UpdateScore(currentScore, fine);
+    }
+    public bool DeleteScore(int points)
+    {
+        if (currentScore - points < 0)
+        {
+            return false;
+        }
+        currentScore -= points;
+        UIManager.Instance.UpdateScore(currentScore, fine);
+        return true;
     }
     public bool CheckPoints()
     {
@@ -30,7 +41,7 @@ public class ScoreManager
         else
         {
             currentScore -= fine;
-            UIManager.Instance.UpdateScore(currentScore);
+            UIManager.Instance.UpdateScore(currentScore, fine);
             return false;
         }
     }

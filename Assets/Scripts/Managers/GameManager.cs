@@ -50,7 +50,7 @@ public class GameManager : MonoBehaviour
                 growtQueue.Remove(growtQueue.First().Key);
             }
         }
-        if (timer >= 10f)
+        if (timer >= 60f)
         {
             timer = 0f;
             Checked(scoreManager.CheckPoints());
@@ -107,18 +107,18 @@ public class GameManager : MonoBehaviour
     }
     public void RegisterSeed(Vector3Int position, int growtTime)   
     {
-        int timeKey = (int)((currentGameTime + growtTime) * chall);
+        int timeKey = (int)(currentGameTime + (growtTime * chall));
         if (!growtQueue.ContainsKey(timeKey))  
         {
             growtQueue[timeKey] = new List<Vector3Int>();
         }
         growtQueue[timeKey].Add(position);
     }
-    public void Checked(bool d)
+    public void Checked(bool isDefeat)
     {
-        if (d)
+        if (isDefeat)
         {
-            NewChallenge();
+            UIManager.Instance.Open(1);
         }
         else
         {
@@ -142,6 +142,37 @@ public class GameManager : MonoBehaviour
         var newPlant = unUsedPlants[Random.RandomRange(0, unUsedPlants.Count)];
         plantsData.Add(newPlant);
         unUsedPlants.Remove(newPlant);
+    }
+    public List<Plants> RandomPlants()
+    {
+        List<Plants> plants = new List<Plants>();
+        if (unUsedPlants.Count == 0)
+        {
+            return null;
+        }
+        if (unUsedPlants.Count <= 3)
+        {
+            for (int i = 0; i < unUsedPlants.Count; i++)
+            {
+                plants.Add(unUsedPlants[i]);
+            }
+            return plants;
+        }
+        if (unUsedPlants.Count > 3)
+        {
+            return unUsedPlants.OrderBy(x => Random.value).Take(3).ToList();
+        }
+        return null;
+    }
+    public bool BuyThisPlant(Plants plant)
+    {
+        if (scoreManager.DeleteScore(plant.price))
+        {
+            unUsedPlants.Remove(plant);
+            plantsData.Add(plant);
+            return true;
+        }
+        return false;
     }
 }
 
