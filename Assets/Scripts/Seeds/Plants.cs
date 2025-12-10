@@ -12,7 +12,8 @@ public class Plants : ScriptableObject
     public Vector3Int position;
     public int growtTime = 3;
     public TypesFlower typesFlower;
-    public TypesFlower[] CombinationFlowers;
+    public VarietyFlower varietyFlower;
+    public List<TypesFlower> CombinationFlowers;
     public Sized sized = new Sized(0.2f, 1f);
     public int maxStages = 1;
     public int currentStadia = 0;
@@ -36,5 +37,11 @@ public enum TypesFlower
     RedScore,
     TileOpenFlower,
     YellowOpenFlower,
+    SpecialFlower
+}
+public enum VarietyFlower
+{
+    ExpandedFlower,
+    ScoreFlower,
     SpecialFlower
 }

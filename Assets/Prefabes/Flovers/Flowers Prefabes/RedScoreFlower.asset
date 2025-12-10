@@ -18,6 +18,7 @@ MonoBehaviour:
   position: {x: 0, y: 0, z: 0}
   growtTime: 3
   typesFlower: 2
+  varietyFlower: 1
   CombinationFlowers: 04000000
   maxStages: 1
   currentStadia: 0

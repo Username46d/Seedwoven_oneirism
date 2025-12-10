@@ -33,6 +33,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         scoreManager = new ScoreManager();
+        UIManager.Instance.ChoicePanel();
     }
     void Update()
     {
@@ -50,6 +51,7 @@ public class GameManager : MonoBehaviour
                 growtQueue.Remove(growtQueue.First().Key);
             }
         }
+        UIManager.Instance.UpdateTime(60 - (int)timer);
         if (timer >= 60f)
         {
             timer = 0f;
@@ -168,11 +170,15 @@ public class GameManager : MonoBehaviour
     {
         if (scoreManager.DeleteScore(plant.price))
         {
-            unUsedPlants.Remove(plant);
-            plantsData.Add(plant);
+            AddPlant(plant);
             return true;
         }
         return false;
+    }
+    public void AddPlant(Plants plants)
+    {
+        unUsedPlants.Remove(plants);
+        plantsData.Add(plants);
     }
 }
 

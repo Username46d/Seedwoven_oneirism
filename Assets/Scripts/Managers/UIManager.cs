@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -23,14 +24,23 @@ public class UIManager : MonoBehaviour
     public TMP_Text[] shopButtonText;
     public Button[] shopButton;
 
+    [Header("ChoicePanel")]
+    public GameObject transformButtons;
+    public Image[] choiceImage;
+
+    public TextMeshProUGUI timer;
     private List<Challenge> challengees;
     private List<Plants> plantes;
 
-
+    private int expandPlantIndex = -1;
+    private int scorePlantInddex = -1;
     int tscore = 0;
+    private Button[] choiceButtons;
     private void Start()
     {
         Instance = this;
+        choiceButtons = transformButtons.transform.GetComponentsInChildren<Button>(true);
+        choiceButtons = choiceButtons.OrderBy(btn => btn.name).ToArray();
         challengees = new List<Challenge>();
         plantes = new List<Plants>();
     }
@@ -38,6 +48,10 @@ public class UIManager : MonoBehaviour
     {
         scoreText.text = $"Current score: {score} / {fine}";
         tscore = score;
+    }
+    public void UpdateTime(int time)
+    {
+        timer.text = $"{time}";
     }
     public void Open(int index)
     {
@@ -102,6 +116,14 @@ public class UIManager : MonoBehaviour
         challengees[i].Apply();
         Close(2);
     }
+    public void Continue()
+    {
+        if (expandPlantIndex != -1 && scorePlantInddex != -1)
+        {
+            GameManager.Instance.AddPlant(GameManager.Instance.unUsedPlants[scorePlantInddex]); GameManager.Instance.AddPlant(GameManager.Instance.unUsedPlants[expandPlantIndex]);
+            Close(4);
+        }
+    }
     public void BuyPlant(int i)
     {
         if (GameManager.Instance.BuyThisPlant(plantes[i]))
@@ -110,5 +132,27 @@ public class UIManager : MonoBehaviour
             shopButton[i].GetComponent<Image>().color = Color.gray;
         }
         Close(3);
+    }
+    public void ChoicePanel()
+    {
+        Plants[] plants = GameManager.Instance.unUsedPlants.ToArray();
+        for (int i = 0; i < plants.Length; i++)
+        {
+            choiceButtons[i].GetComponent<Image>().sprite = plants[i].growtTile.GetComponent<SpriteRenderer>().sprite;
+        }
+        Open(4);
+    }
+    public void ChoiceThisPlant(int i)
+    {
+        if (GameManager.Instance.unUsedPlants[i].varietyFlower == VarietyFlower.ExpandedFlower)
+        {
+            expandPlantIndex = i;
+            choiceImage[0].sprite = GameManager.Instance.unUsedPlants[i].growtTile.GetComponent<SpriteRenderer>().sprite;
+        }
+        else if(GameManager.Instance.unUsedPlants[i].varietyFlower == VarietyFlower.ScoreFlower)
+        {
+            scorePlantInddex = i;
+            choiceImage[1].sprite = GameManager.Instance.unUsedPlants[i].growtTile.GetComponent<SpriteRenderer>().sprite;
+        }
     }
 }
