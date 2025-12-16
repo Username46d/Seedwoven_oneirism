@@ -24,6 +24,8 @@ public class TIleManager : MonoBehaviour
 
     private Dictionary<Vector3Int, GameTile> tileDataMap = new Dictionary<Vector3Int, GameTile>();  
     Vector3Int positionsInVoid = new Vector3Int(0, 0, 0);
+    public int activeTilesCounter = 0;
+    private int currentTilesCounter = 0;
     public class GameTile
     {
         public Plants PlantedSeed;
@@ -64,6 +66,10 @@ public class TIleManager : MonoBehaviour
                     if (types.ruleTile == ruleTileFromMap)
                     {
                         tileDataMap[posit].soilData = types;
+                        if (types.isPlantable == true)
+                        {
+                            activeTilesCounter++;
+                        }
                     }
                 }
                 if (specialSoil[0].ruleTile == ruleTileFromMap)
@@ -76,8 +82,10 @@ public class TIleManager : MonoBehaviour
                     tileDataMap[posit].PlantedSeed = randPlant; tileDataMap[posit].soilData = specialSoil[0];
                     Debug.Log($"{tileDataMap[posit].PlantedSeed}");
                 }
+
             }
         }
+        Debug.Log("activeTiles" + activeTilesCounter);
     }
     public GameTile CreateNewTile()
     {
@@ -209,4 +217,13 @@ public class TIleManager : MonoBehaviour
     //        lastHovPos = hoveredTile;
     //    }
     //}
+    public void CurrentTilesCounterSet() {
+        Debug.Log(currentTilesCounter + "   " + activeTilesCounter);
+        currentTilesCounter += 1;
+        if (currentTilesCounter >= 0.8f * activeTilesCounter) 
+        {
+            UIManager.Instance.Open(5);
+        }
+        UIManager.Instance.UpdateProgress(currentTilesCounter, (int)(activeTilesCounter * 0.8f));
+    }
 }

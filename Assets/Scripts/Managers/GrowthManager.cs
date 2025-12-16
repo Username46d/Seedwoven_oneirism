@@ -18,6 +18,7 @@ public class GrowthManager : MonoBehaviour
         }
         else
         {
+            TIleManager.Instance.CurrentTilesCounterSet();
             plant.Apply(TIleManager.Instance.CombinateCheck(position));
         }
     }

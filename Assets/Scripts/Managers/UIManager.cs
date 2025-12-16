@@ -29,6 +29,7 @@ public class UIManager : MonoBehaviour
     public Image[] choiceImage;
 
     public TextMeshProUGUI timer;
+    public TextMeshProUGUI scorePanel;
     private List<Challenge> challengees;
     private List<Plants> plantes;
 
@@ -52,6 +53,10 @@ public class UIManager : MonoBehaviour
     public void UpdateTime(int time)
     {
         timer.text = $"{time}";
+    }
+    public void UpdateProgress(int score, int currentScore)
+    {
+        scorePanel.text = $"Score: {score}/{currentScore}";
     }
     public void Open(int index)
     {
